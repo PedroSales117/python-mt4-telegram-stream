@@ -1,0 +1,35 @@
+// Exemplo de script MQL4 para enviar sinal de trading
+void OnStart() {
+  // Atualiza os dados do preço atual
+  RefreshRates();
+
+  // Obtém o símbolo do instrumento financeiro atual
+  string symbol = Symbol();
+
+  // Suponha que a direção é determinada aqui (compra ou venda)
+  string direction = "compra"; // ou "venda"
+  string directionSymbol = direction == "compra" ? "⬆️" : "⬇️";
+
+  // Obtém o último preço Bid (de compra) para o símbolo atual
+  double lastPrice = MarketInfo(symbol, MODE_BID);
+
+  // Formata os dados para envio
+  string data = "acao=" + direction + "&preco=" + DoubleToString(lastPrice, 5) + "&simbolo=" + symbol + "&direcao=" + directionSymbol;
+
+  string url = "http://seu-servidor.com/api/sinal";
+
+  // Configurar cabeçalhos necessários para a requisição
+  char headers[] = "Content-Type: application/x-www-form-urlencoded";
+  char result[];
+
+  // Enviar a solicitação HTTP
+  int res = WebRequest("POST", url, headers, 5, data, result, NULL, NULL);
+
+  if(res == -1) {
+    // Tratar erro
+    Print("Erro ao enviar o sinal: ", GetLastError());
+  } else {
+    // Sucesso
+    Print("Sinal enviado com sucesso: ", data);
+  }
+}
