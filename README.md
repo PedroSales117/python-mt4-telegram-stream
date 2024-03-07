@@ -1,62 +1,74 @@
-# Documentação para Implementação de Código MQL e Servidor Local com Código do GitHub
+# Documentação para Implementação de Código MQL e Servidor Local com Código do GitHub e Exposição via Ngrok
 
-Esta documentação cobre os passos básicos para implementar um código MQL na plataforma MetaTrader, bem como instalar e inicializar um servidor Flask com um código proveniente do GitHub localmente.
+Esta documentação abrange os passos básicos para a implementação de um código MQL na plataforma MetaTrader, além de instalar e inicializar um servidor Flask localmente com um código proveniente do GitHub. Também incluímos instruções sobre como utilizar o Ngrok para expor seu servidor Flask local à Internet, facilitando testes e demonstrações sem necessidade de configuração de DNS ou firewall.
 
 ## Parte 1: Implementação do Código MQL na Plataforma MetaTrader
 
-### Pré-Requisitos:
+### Pré-Requisitos
 - Ter o MetaTrader 4 ou MetaTrader 5 instalado no seu computador.
 
-### Passos:
-
+### Passos
 1. **Criar um Novo Script MQL**:
-   - Abra o MetaTrader.
-   - No menu superior, escolha `Ferramentas` > `MetaQuotes Language Editor` ou pressione `F4` para abrir o editor.
-   - No editor, clique com o botão direito em `Expert Advisors` (MetaTrader 4) ou `Advisors` (MetaTrader 5) no painel de navegação à esquerda, e selecione `Novo`.
+   - Abra o MetaTrader e escolha `Ferramentas` > `MetaQuotes Language Editor` ou pressione `F4`.
+   - No editor, clique com o botão direito em `Expert Advisors` (MT4) ou `Advisors` (MT5) e selecione `Novo`.
 
 2. **Copiar e Colar o Código MQL**:
-   - No assistente que se abre, escolha `Script` (se aplicável) e prossiga até o editor de código.
-   - Copie o seu código MQL e cole no editor de código aberto.
+   - Escolha `Script` e prossiga até o editor de código.
+   - Cole o seu código MQL.
 
 3. **Compilar o Script**:
-   - Salve o arquivo utilizando o ícone de disquete ou `Arquivo` > `Salvar`.
-   - Clique no botão `Compilar` ou escolha `Compilar` no menu para verificar se há erros. Se a compilação for bem-sucedida, seu script está pronto para ser usado.
+   - Salve e clique em `Compilar`.
 
 4. **Executar o Script no MetaTrader**:
-   - Feche o MetaQuotes Language Editor.
-   - No MetaTrader, vá até a aba `Navegador`, encontre `Scripts`, e você verá o seu script listado lá.
-   - Arraste o script para qualquer gráfico de sua escolha para executá-lo.
+   - Encontre seu script em `Navegador` e arraste para o gráfico.
 
-### Testando o Script:
-- Recomenda-se testar o script primeiro em um ambiente de simulação ou conta demo antes de aplicá-lo em uma conta real.
+### Testando o Script
+- Teste primeiro em um ambiente de simulação ou conta demo.
 
-## Parte 2: Instalando e Inicializando o Servidor Flask com Código do GitHub Localmente
+## Parte 2: Instalando e Inicializando o Servidor Flask Localmente com Código do GitHub
 
-### Pré-Requisitos:
-- Python instalado no seu computador.
-- `git` instalado no seu computador.
+### Pré-Requisitos
+- Python e `git` instalados no seu computador.
 
-### Passos:
-
+### Passos
 1. **Clonar o Repositório do GitHub**:
-   - Abra o terminal ou prompt de comando.
-   - Navegue até o diretório onde deseja clonar o repositório.
-   - Execute o comando `git clone URL_DO_REPOSITORIO`, substituindo `URL_DO_REPOSITORIO` pelo link do repositório que contém o código do servidor Flask.
+   - Use `git clone URL_DO_REPOSITORIO`.
 
 2. **Preparar o Ambiente**:
-   - Acesse o diretório clonado com `cd NOME_DO_REPOSITORIO`.
-   - (Opcional) Crie um ambiente virtual Python com `python -m venv venv` e ative-o com `source venv/bin/activate` (Linux/macOS) ou `.\venv\Scripts\activate` (Windows).
-   - Instale as dependências necessárias com `pip install -r requirements.txt`.
+   - Navegue até o diretório clonado e, se desejar, crie e ative um ambiente virtual. Instale as dependências com `pip install -r requirements.txt`.
 
 3. **Inicializar o Servidor Flask**:
-   - Certifique-se de que está no diretório raiz do projeto Flask clonado.
-   - Execute o servidor Flask com `python nome_do_arquivo.py`, substituindo `nome_do_arquivo.py` pelo nome do arquivo principal do seu aplicativo Flask.
-   - O terminal deve mostrar que o servidor está rodando, geralmente em `http://127.0.0.1:5000/` ou `http://localhost:5000/`.
+   - Execute o servidor Flask com `python nome_do_arquivo.py`.
 
-### Acessando o Servidor:
-- Abra um navegador e acesse o endereço indicado no terminal para verificar se o servidor está funcionando corretamente.
+### Acessando o Servidor
+- Use um navegador para acessar o endereço indicado pelo terminal.
 
-## Considerações Finais:
-- Para modificações no código MQL ou no servidor Flask, repita os passos relevantes para implementação e teste.
+## Parte 3: Exposição do Servidor Flask Usando Ngrok
+
+### Pré-Requisitos
+- Conta no Ngrok e o Ngrok instalado no seu computador.
+
+### Passos
+1. **Iniciar o Ngrok**:
+   - Após iniciar seu servidor Flask, abra um novo terminal na pasta onde o Ngrok está localizado e execute `./ngrok http 5000` para expor a porta 5000.
+
+2. **Acessar a URL do Ngrok**:
+   - O Ngrok fornecerá uma URL pública (ex: `http://xxxxxx.ngrok.io`) que redireciona para o seu servidor Flask local. Essa URL pode ser usada para acessar seu servidor de qualquer lugar.
+
+### Considerações sobre o Ngrok
+- O endereço do Ngrok muda a cada vez que você o inicia, a menos que você tenha uma conta paga que permite endereços fixos.
+- Lembre-se de atualizar as configurações que dependem dessa URL sempre que ela mudar.
+
+## Links para Download de Ferramentas Necessárias
+
+- **MetaTrader 5**: Baixe de [metatrader5.com](https://www.metatrader5.com/en/download) para acessar recursos avançados de trading【42†fonte】.
+- **Python**: Obtenha a versão mais recente de [python.org](https://www.python.org/downloads/).
+- **ngrok**: Faça o download em [ngrok.com](https://ngrok.com/) para expor seu servidor local à internet.
+- **Git**: Baixe de [git-scm.com](https://git-scm.com/downloads) para clonar repositórios e gerenciar versões do seu código.
+
+Inclua esses passos e links na sua documentação para facilitar a instalação e configuração das ferramentas necessárias para a implementação do seu projeto.
+
+## Considerações Finais
+- Para modificações no código MQL ou no servidor Flask, repita os passos relevantes.
 - Mantenha suas ferramentas atualizadas para evitar problemas de compatibilidade.
-- Consulte a documentação oficial do MetaTrader e do Flask para recursos avançados e práticas recomendadas.
+- Consulte as documentações oficiais do MetaTrader, Flask e Ngrok para práticas recomendadas e recursos avançados.
