@@ -1,4 +1,4 @@
-// Exemplo de script MQL4 para enviar sinal de trading
+// Exemplo de script MQL4 ajustado para enviar sinal de trading via HTTP POST
 void OnStart() {
   // Atualiza os dados do preço atual
   RefreshRates();
@@ -16,15 +16,24 @@ void OnStart() {
   // Formata os dados para envio
   string data = "acao=" + direction + "&preco=" + DoubleToString(lastPrice, 5) + "&simbolo=" + symbol + "&direcao=" + directionSymbol;
 
+  // Prepara os dados para o corpo da requisição POST
+  char postData[];
+  StringToCharArray(data, postData);
+
+  // URL para onde o sinal será enviado
   string url = "http://seu-servidor.com/api/sinal";
 
-  // Configurar cabeçalhos necessários para a requisição
+  // Cabeçalhos da requisição HTTP
   char headers[] = "Content-Type: application/x-www-form-urlencoded";
-  char result[];
+  
+  // Array para armazenar o resultado da requisição
+  char result[2048];
+  string resultString;
 
   // Enviar a solicitação HTTP
-  int res = WebRequest("POST", url, headers, 5, data, result, NULL, NULL);
+  int res = WebRequest("POST", url, headers, 5, postData, result, resultString);
 
+  // Verifica o resultado da requisição
   if(res == -1) {
     // Tratar erro
     Print("Erro ao enviar o sinal: ", GetLastError());
